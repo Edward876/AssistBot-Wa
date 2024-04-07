@@ -123,13 +123,16 @@ const start = async () => {
             );
         } else if (connection === 'close') {
             console.log(color('[server]', '#009FFF'), color(moment().format('DD/MM/YY HH:mm:ss'), '#A1FFCE'), color(`Connection Closed, trying to reconnect`, '#f64f59'));
-            lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut
-                ? start()
-                : console.log(
-                    color('[server]', '#009FFF'),
-                    color(moment().format('DD/MM/YY HH:mm:ss'), '#A1FFCE'),
-                    color(`WA Web Logged out`, '#f64f59')
-                );;
+           if (lastDisconnect.error && lastDisconnect.error.output && lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
+    start();
+} else {
+    console.log(
+        color('[server]', '#009FFF'),
+        color(moment().format('DD/MM/YY HH:mm:ss'), '#A1FFCE'),
+        color('WA Web Logged out', '#f64f59')
+    );
+}
+
         } else if (connection == 'open') {
             console.log(
                 color('[server]', '#009FFF'),
